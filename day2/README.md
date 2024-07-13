@@ -1,37 +1,10 @@
 # 【Day 2】變量聲明：let 和 const
+## 聯繫我
 
-## 目錄
+如果有任何問題或建議，歡迎隨時聯繫我：
 
-1. [ES6+ 簡介及環境設置](./day1/README.md)
-2. [變量聲明：let 和 const](./day2/README.md)
-3. [箭頭函數與模板字面量](./day3/README.md)
-4. [解構賦值與擴展運算符](./day4/README.md)
-5. [函數參數預設值與 Symbol](./day5/README.md)
-6. [迴圈：for...of 和迭代器](./day6/README.md)
-7. [Array 和 String 的新方法](./day7/README.md)
-8. [Number 和 Object 的新方法](./day8/README.md)
-9. [Math 的新方法](./day9/README.md)
-10. [Promises 基礎與進階](./day10/README.md)
-11. [async/await 基礎與進階](./day11/README.md)
-12. [事件循環概念與詳解](./day12/README.md)
-13. [非阻塞 I/O 概念與應用](./day13/README.md)
-14. [類別與繼承](./day14/README.md)
-15. [靜態方法與存取器](./day15/README.md)
-16. [類別中的私有字段](./day16/README.md)
-17. [模組化](./day17/README.md)
-18. [Proxy 和 Reflect](./day18/README.md)
-19. [Set 和 WeakSet](./day19/README.md)
-20. [Map 和 WeakMap](./day20/README.md)
-21. [生成器與進階應用](./day21/README.md)
-22. [可選鏈式操作符](./day22/README.md)
-23. [Nullish 合併運算符](./day23/README.md)
-24. [BigInt](./day24/README.md)
-25. [全局對象：globalThis](./day25/README.md)
-26. [高階函數：map、filter、reduce](./day26/README.md)
-27. [簡化的異步處理](./day27/README.md)
-28. [模板字面量與標籤模板](./day28/README.md)
-29. [擴展運算符的高級用法](./day29/README.md)
-30. [現代 JavaScript 項目最佳實踐](./day30/README.md)
+- [GitHub](https://github.com/Chung-Chi-Lin)
+- [Email](mailto:z0925955648@gmail.com)
 
 ## 介紹
 
@@ -195,14 +168,3 @@ console.log(a) // 5
 也推薦大家使用 Google Chrome 的主控台去簡單使用看看不同區塊宣告變數時產生的不同效果，對於日後的排雷會有很大的幫助哦!
 
 歡迎在討論區互動交流，明天我們將探討大大加速開發的箭頭函數與模板字面量!
-
-## 聯繫我
-
-如果有任何問題或建議，歡迎隨時聯繫我：
-
-- [GitHub](https://github.com/Chung-Chi-Lin)
-- [Email](mailto:z0925955648@gmail.com)
-
-## 版權聲明
-
-本系列文章版權歸屬於作者，禁止未經許可的轉載和商業用途。歡迎個人學習和分享。

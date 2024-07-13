@@ -1,5 +1,12 @@
 # 【Day1】序章： 簡介 & ES6+ 背景及快速開始
 
+
+## 聯繫我
+如果有任何問題或建議，歡迎隨時聯繫我：
+
+- [GitHub](https://github.com/Chung-Chi-Lin)
+- [Email](mailto:z0925955648@gmail.com)
+
 ## 介紹
 
 歡迎來到 **JavaScript 新手到高手：現代特性全攻略** 系列文章！這個系列旨在幫助你掌握現代 JavaScript 的各種特性，從基本概念到進階應用，讓你一天接著一天成為
@@ -14,36 +21,39 @@ JavaScript 的高手。
 
 ## 目錄
 
-1. [ES6+ 簡介及環境設置](./day1/README.md)
-2. [變量聲明：let 和 const](./day2/README.md)
-3. [箭頭函數與模板字面量](./day3/README.md)
-4. [解構賦值與擴展運算符](./day4/README.md)
-5. [函數參數預設值與 Symbol](./day5/README.md)
-6. [迴圈：for...of 和迭代器](./day6/README.md)
-7. [Array 和 String 的新方法](./day7/README.md)
-8. [Number 和 Object 的新方法](./day8/README.md)
-9. [Math 的新方法](./day9/README.md)
-10. [Promises 基礎與進階](./day10/README.md)
-11. [async/await 基礎與進階](./day11/README.md)
-12. [事件循環概念與詳解](./day12/README.md)
-13. [非阻塞 I/O 概念與應用](./day13/README.md)
-14. [類別與繼承](./day14/README.md)
-15. [靜態方法與存取器](./day15/README.md)
-16. [類別中的私有字段](./day16/README.md)
-17. [模組化](./day17/README.md)
-18. [Proxy 和 Reflect](./day18/README.md)
-19. [Set 和 WeakSet](./day19/README.md)
-20. [Map 和 WeakMap](./day20/README.md)
-21. [生成器與進階應用](./day21/README.md)
-22. [可選鏈式操作符](./day22/README.md)
-23. [Nullish 合併運算符](./day23/README.md)
-24. [BigInt](./day24/README.md)
-25. [全局對象：globalThis](./day25/README.md)
-26. [高階函數：map、filter、reduce](./day26/README.md)
-27. [簡化的異步處理](./day27/README.md)
-28. [模板字面量與標籤模板](./day28/README.md)
-29. [擴展運算符的高級用法](./day29/README.md)
-30. [現代 JavaScript 項目最佳實踐](./day30/README.md)
+| 天數 | 主題                                | 描述                                                                                         |
+|------|-------------------------------------|----------------------------------------------------------------------------------------------|
+| Day 1| ES6+ 簡介及環境設置                | 簡介 ES6+ 的背景和重要性，並設置開發環境。                                                   |
+| Day 2| 變量聲明：let 和 const              | 深入探討 let 和 const 的變量聲明方式，以及與 var 的區別。                                     |
+| Day 3| 箭頭函數與模板字面量               | 介紹箭頭函數和模板字面量的語法和應用，解決 this 綁定問題。                                   |
+| Day 4| 解構賦值與擴展運算符               | 講解解構賦值和擴展運算符的基本用法和應用場景。                                               |
+| Day 5| 函數參數預設值與 Symbol            | 介紹函數參數預設值的使用方法及 Symbol 的概念與應用。                                           |
+| Day 6| 迴圈：for...of 和迭代器            | 探討 for...of 迴圈和迭代器的基本概念和使用方法。                                             |
+| Day 7| Array 和 String 的新方法           | 講解 ES6+ 為 Array 和 String 添加的新方法及其應用。                                           |
+| Day 8| Number 和 Object 的新方法          | 介紹 ES6+ 中 Number 和 Object 的新方法。                                                     |
+| Day 9| Math 的新方法                      | 介紹 ES6+ 中 Math 對象的新方法。                                                             |
+| Day 10| Promises 基礎與進階               | 探討 Promises 的基本概念和進階用法，幫助處理異步操作。                                       |
+| Day 11| async/await 基礎與進階            | 深入介紹 async/await 的基礎概念及其進階應用，簡化異步代碼。                                   |
+| Day 12| 事件循環概念與詳解                | 解釋 JavaScript 的事件循環機制，幫助理解非阻塞 I/O。                                         |
+| Day 13| 非阻塞 I/O 概念與應用             | 介紹非阻塞 I/O 的概念和應用場景，提升代碼性能。                                               |
+| Day 14| 類別與繼承                        | 深入探討 ES6+ 的類別與繼承機制，模擬傳統面向對象編程。                                       |
+| Day 15| 靜態方法與存取器                  | 介紹類別中的靜態方法和存取器的使用方法。                                                     |
+| Day 16| 類別中的私有字段                  | 講解類別中的私有字段及其應用。                                                               |
+| Day 17| 模組化                            | 介紹 ES6+ 模組化機制及其使用方法，提升代碼可維護性。                                          |
+| Day 18| Proxy 和 Reflect                  | 探討 Proxy 和 Reflect 對象的基本用法和應用場景。                                             |
+| Day 19| Set 和 WeakSet                    | 介紹 Set 和 WeakSet 這兩種集合對象及其應用。                                                 |
+| Day 20| Map 和 WeakMap                    | 介紹 Map 和 WeakMap 這兩種集合對象及其應用。                                                 |
+| Day 21| 生成器與進階應用                  | 深入探討生成器的基礎和進階應用，幫助處理異步流程。                                           |
+| Day 22| 可選鏈式操作符                    | 介紹可選鏈式操作符的使用方法及其應用。                                                       |
+| Day 23| Nullish 合併運算符                | 講解 Nullish 合併運算符的基本概念及其應用場景。                                               |
+| Day 24| BigInt                             | 介紹 BigInt 的基本概念及其應用場景。                                                          |
+| Day 25| 全局對象：globalThis              | 介紹 globalThis 對象及其使用方法。                                                          |
+| Day 26| 高階函數：map、filter、reduce     | 介紹常見的高階函數 map、filter 和 reduce 及其應用。                                           |
+| Day 27| 簡化的異步處理                    | 介紹簡化異步處理的方法和技巧，提升代碼可讀性。                                               |
+| Day 28| 進階正則表達式技巧                | 介紹正則表達式的進階技巧和應用場景，提升字符串處理能力。                                      |
+| Day 29| 擴展運算符的高級用法              | 深入探討擴展運算符的高級用法及其應用場景。                                                   |
+| Day 30| 現代 JavaScript 項目最佳實踐     | 分享現代 JavaScript 項目的最佳實踐，提升開發效率和代碼質量。                                  |
+
 
 # Day 1: ES6+ 簡介及快速開始
 
@@ -172,14 +182,3 @@ JavaScript 本身是一種可以在瀏覽器中運行的腳本語言，因此在
 
 在第一天的學習中，我們了解了 ES6+ 的背景和重要性，並設置了一個快速的開發環境，運行了第一個 JavaScript 程式 "Hello World"
 。歡迎在討論區互動交流，明天我們一起迎接新的**變數**關卡吧!
-
-## 聯繫我
-
-如果有任何問題或建議，歡迎隨時聯繫我：
-
-- [GitHub](https://github.com/Chung-Chi-Lin)
-- [Email](mailto:z0925955648@gmail.com)
-
-## 版權聲明
-
-本系列文章版權歸屬於作者，禁止未經許可的轉載和商業用途。歡迎個人學習和分享。
