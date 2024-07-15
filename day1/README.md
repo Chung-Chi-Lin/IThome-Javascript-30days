@@ -16,7 +16,7 @@ JavaScript 的高手。
 
 1. [ES6+ 簡介及環境設置](./day1/README.md)
 2. [變量聲明：let 和 const](./day2/README.md)
-3. [箭頭函數與模板字面量](./day3/README.md)
+3. [箭頭函數與樣板字面值](./day3/README.md)
 4. [解構賦值與擴展運算符](./day4/README.md)
 5. [函數參數預設值與 Symbol](./day5/README.md)
 6. [迴圈：for...of 和迭代器](./day6/README.md)
@@ -41,7 +41,7 @@ JavaScript 的高手。
 25. [全局對象：globalThis](./day25/README.md)
 26. [高階函數：map、filter、reduce](./day26/README.md)
 27. [簡化的異步處理](./day27/README.md)
-28. [模板字面量與標籤模板](./day28/README.md)
+28. [樣板字面值與標籤模板](./day28/README.md)
 29. [擴展運算符的高級用法](./day29/README.md)
 30. [現代 JavaScript 項目最佳實踐](./day30/README.md)
 
