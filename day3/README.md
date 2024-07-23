@@ -1,37 +1,9 @@
 # 【Day 3】箭頭函數與樣板字面值
 
-## 目錄
-
-1. [ES6+ 簡介及環境設置](./day1/README.md)
-2. [變量聲明：let 和 const](./day2/README.md)
-3. [箭頭函數與樣板字面值](./day3/README.md)
-4. [解構賦值與擴展運算符](./day4/README.md)
-5. [函數參數預設值與 Symbol](./day5/README.md)
-6. [迴圈：for...of 和迭代器](./day6/README.md)
-7. [Array 和 String 的新方法](./day7/README.md)
-8. [Number 和 Object 的新方法](./day8/README.md)
-9. [Math 的新方法](./day9/README.md)
-10. [Promises 基礎與進階](./day10/README.md)
-11. [async/await 基礎與進階](./day11/README.md)
-12. [事件循環概念與詳解](./day12/README.md)
-13. [非阻塞 I/O 概念與應用](./day13/README.md)
-14. [類別與繼承](./day14/README.md)
-15. [靜態方法與存取器](./day15/README.md)
-16. [類別中的私有字段](./day16/README.md)
-17. [模組化](./day17/README.md)
-18. [Proxy 和 Reflect](./day18/README.md)
-19. [Set 和 WeakSet](./day19/README.md)
-20. [Map 和 WeakMap](./day20/README.md)
-21. [生成器與進階應用](./day21/README.md)
-22. [可選鏈式操作符](./day22/README.md)
-23. [Nullish 合併運算符](./day23/README.md)
-24. [BigInt](./day24/README.md)
-25. [全局對象：globalThis](./day25/README.md)
-26. [高階函數：map、filter、reduce](./day26/README.md)
-27. [簡化的異步處理](./day27/README.md)
-28. [樣板字面值與標籤模板](./day28/README.md)
-29. [擴展運算符的高級用法](./day29/README.md)
-30. [現代 JavaScript 項目最佳實踐](./day30/README.md)
+## 聯繫我
+如果有任何問題或建議，歡迎隨時聯繫我：
+- [GitHub](https://github.com/Chung-Chi-Lin)
+- [Email](mailto:z0925955648@gmail.com)
 
 ## 介紹
 
@@ -96,7 +68,7 @@ function Person() {
 const p = new Person();
 ```
 ### 箭頭函數中的 this
-在箭頭函數中，this 的指向是靜態的，總是指向定義時的上下文：
+在箭頭函數中，this 的指向是靜態的，總是指向定義時的上下文， 這裡修改 setInterval 函式：
 
 ``` javascript
 function Person() {
@@ -104,14 +76,14 @@ function Person() {
 
     setInterval(() => {
         this.age++;
-        console.log(this.age);
+        console.log(this.age); // 1 -> 2 -> 3 ...
     }, 1000);
 }
 
 const p = new Person();
 // 這裡的 this 指向的是 Person 實例對象，因為箭頭函數沒有自己的 this。
 ```
-箭頭真香我以後都只用箭頭函式! 如果這樣想那可就 麻 煩大了! 我們來看看幾個陷阱。
+箭頭真香我以後都只用箭頭函式! 如果這樣想可就要特別注意了! 我們來看看幾個陷阱。
 
 ### 1. 在方法中使用箭頭函數
 
@@ -269,34 +241,34 @@ const sum = `The sum of ${a} and ${b} is ${a + b}.`;
 console.log(sum); // The sum of 5 and 10 is 15.
 ```
 
-## 標籤模板
+## 延伸-標籤模板
 ### 基本概念
 標籤模板是一種高級用法，可以在樣板字面值前添加一個標籤函數，該函數可以對樣板字面值的內容進行處理：
 
+先上範例了解它的使用方法!
 ```javascript
 function tag(strings, ...values) {
-	console.log(strings);
-	console.log(values);
-	return strings[0] + values.join('');
+	return strings[0] + values[0];
 }
 
-const message = tag`Hello, ${name}! Welcome to ${location}.`;
-console.log(message);
+const name = 'John';
+const message = tag`Hello, ${name}`;
+console.log(message); // Hello, John
 ```
 
 ### 應用場景
 標籤模板可以用於實現自定義的字符串處理邏輯，如安全轉義、國際化等。
 
-```javascript
-const maxItems = 10;
+這是其中一個實際的範例，例如: 將用戶的所在地區做對應的文字翻譯!
+在圖片中可以由 console.log() 分別看到，預設參數的值!
 
-for (let i = 0; i < maxItems; i++) {
-    // 迴圈中使用 let
-    console.log(i);
-}
-```
+![標籤模板](https://github.com/Chung-Chi-Lin/IThome-Javascript-30days/blob/main/day3/imgs/TagTemplate.png?raw=true)
+
+有沒有發現其中的好處? 這樣是不是就可以用一個函式不用在寫一大堆字串了~
+
 ## 本篇自我挑戰
 何謂自我挑戰，~~問題不怕困難，重點是要解決出問題的人(誤~~，嘗試開始! 在這裡你可以看到大家是怎麼回答題目的，甚至會看到暗藏的高手可以將簡單的題目回答的淋漓盡致!
+回答我都會放在隔天的 [GitHub](https://github.com/Chung-Chi-Lin) 上哦!
 
 - 今日挑戰：使用箭頭函數重寫傳統函數
 ```javascript
@@ -304,45 +276,27 @@ for (let i = 0; i < maxItems; i++) {
 function multiply(a, b) {
 	return a * b;
 }
-
-// 使用箭頭函數重寫
-const multiply = (a, b) => a * b;
 ```
 - 今日挑戰：使用樣板字面值創建多行字符串
 ```javascript
 // 使用樣板字面值創建多行字符串
-const poem = `這是一首詩
-第一行
-第二行
-第三行`;
-console.log(poem);
+const poem = ``;
 ```
-- 今日挑戰：使用標籤模板實現自定義處理
+- 今日挑戰：自行設計使用標籤模板實現自定義處理
 ```javascript
-// 自定義標籤函數
-function highlight(strings, ...values) {
-	return strings.reduce((result, string, i) => `${result}${string}<b>${values[i] || ''}</b>`, '');
-}
+// 自定義標籤函數範例
+function highlight() {}
 
 const name = 'Alice';
 const age = 25;
-const message = highlight`Name: ${name}, Age: ${age}`;
+const message = highlight``;
 console.log(message); // Name: <b>Alice</b>, Age: <b>25</b>
 ```
 
 ## 總結
 
-在第三天的學習中，我們介紹了箭頭函數和樣板字面值，並探討了它們的基本語法和應用場景。通過這些新的特性，我們可以編寫更加簡潔和可讀的代碼。
+在第三天的學習中，我們介紹了箭頭函數和樣板字面值，另外還多了解到了標籤模板的使用方式! 對於實際開發中本章節提到的用法可以說很常見可以說是必學語法。
+
+標籤模板雖然較少見，但對於開發我認為多一個打怪技能絕對是多了一個組合技的選擇啊!
 
 歡迎在討論區互動交流，明天我們將探討解構賦值與擴展運算符！
-
-## 聯繫我
-
-如果有任何問題或建議，歡迎隨時聯繫我：
-
-- [GitHub](https://github.com/Chung-Chi-Lin)
-- [Email](mailto:z0925955648@gmail.com)
-
-## 版權聲明
-
-本系列文章版權歸屬於作者，禁止未經許可的轉載和商業用途。歡迎個人學習和分享。

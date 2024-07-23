@@ -1,7 +1,7 @@
 // === day3 教學程式碼 ===
 function i18n(strings, ...values) {
-	console.log(strings); //
-	console.log(values[0]);
+	console.log(strings); // ${} 做分割斷點後的字串
+	console.log(...values); // ${} 內的值
 	const translations = {
 		'Hello, ': 'Hola, ',
 		'world!': 'mundo!'
@@ -12,8 +12,7 @@ function i18n(strings, ...values) {
 }
 
 const name = 'John';
-const where = 'keelung';
-const greeting = i18n`Hello, ${name}! Welcome to the ${where}!`;
+const greeting = i18n`Hello, ${name}! Welcome to the world!`;
 console.log(greeting); // Hola, John! Welcome to the mundo!
 
 // === day2 自我挑戰 ===

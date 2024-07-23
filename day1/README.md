@@ -83,7 +83,7 @@ JavaScript 語言變得更強大和現代化。
 
 在黃框中輸入語法就可以看到目前瀏覽器的支援度等等資訊，甚至 CSS 也可以查詢哦!
 
-![Can I use](./imgs/CanIUse.png)
+![Can I use](https://github.com/Chung-Chi-Lin/IThome-Javascript-30days/blob/main/day1/imgs/CanIUse.png?raw=true)
 
 ## 選擇代碼編輯器及安裝 Node.js 和 npm
 
@@ -134,7 +134,7 @@ JavaScript 本身是一種可以在瀏覽器中運行的腳本語言，因此在
 1. **打開 VSCode**
    在新的資料夾內新增一個新的 HelloWorld.js 的檔案
 
-![VS Code 安裝](./imgs/VSCode-2.png)
+   ![VS Code 安裝](https://github.com/Chung-Chi-Lin/IThome-Javascript-30days/blob/main/day1/imgs/VSCode-2.png?raw=true)
 
 2. **輸入程式碼**
     - 在 `HelloWorld.js` 檔案中輸入如下指令：
@@ -150,7 +150,7 @@ JavaScript 本身是一種可以在瀏覽器中運行的腳本語言，因此在
       ```
 就這樣完成了第一次的程式碼運行!
 
-   ![VS Code 安裝](./imgs/VSCode-1.png)
+   ![VS Code 安裝](https://github.com/Chung-Chi-Lin/IThome-Javascript-30days/blob/main/day1/imgs/VSCode-1.png?raw=true)
 
 ### 故障排除步驟
 
@@ -172,6 +172,7 @@ JavaScript 本身是一種可以在瀏覽器中運行的腳本語言，因此在
 
 ## 本篇自我挑戰
 何謂自我挑戰，~~問題不怕困難，重點是要解決出問題的人(誤~~，嘗試開始! 在這裡你可以看到大家是怎麼回答題目的，甚至會看到暗藏的高手可以將簡單的題目回答的淋漓盡致!
+回答我都會放在隔天的 [GitHub](https://github.com/Chung-Chi-Lin) 上哦!
 
 - 今日挑戰：有沒有辦法自己 console.log 出一個屬於自己的文字？
 - 反思：有沒有辦法在 console.log 裡面做數學運算呢？
