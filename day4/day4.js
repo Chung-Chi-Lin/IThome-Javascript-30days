@@ -1,24 +1,22 @@
 // === day3 自我挑戰 ===
 
-// 1. 使用解構賦值重構代碼
-const user = {
-	id: 1,
-	name: 'John Doe',
-	email: 'john.doe@example.com'
-};
+// 1. 使用箭頭函數重寫傳統函數
+// 傳統函數
+function multiply(a, b) {
+	return a * b;
+}
 
-const { id, name, email } = user;
+const multiple = (a, b) => a * b;
+// 2.使用樣板字面值創建多行字符串
+const lastName = "john";
+const poem = `hello my name is ${lastName}`;
 
-// 2.使用擴展運算符合併數組
-const arr1 = [1, 2, 3];
-const arr2 = [4, 5, 6];
+// 3.自行設計使用標籤模板實現自定義處理
+function highlight(strings, ...values) {
+	return strings.reduce((result, string, i) => `${result}${string}<b>${values[i] || ''}</b>`, '');
+}
 
-const array = [ ...arr1, ...arr2 ];
-
-// 3.使用擴展運算符合併對象
-
-const obj1 = { a: 1, b: 2 };
-const obj2 = { c: 3, d: 4 };
-
-// 在這裡合併 obj1 和 obj2
-const obj3 = { ...obj1, ...obj2};
+const name = 'Alice';
+const age = 25;
+const message = highlight`Name: ${name}, Age: ${age}`;
+console.log(message); // Name: <b>Alice</b>, Age: <b>25</b><b></b>

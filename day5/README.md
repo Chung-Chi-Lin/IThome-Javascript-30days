@@ -35,12 +35,12 @@ greet('Alice'); // Hello, Alice!
 我們可以為多個參數設置預設值：
 
 ```javascript
-function sum(a = 0, b = 0) {
+function sum(a = 1, b = 1) {
     return a + b;
 }
 
-console.log(sum()); // 0
-console.log(sum(5)); // 5
+console.log(sum()); // 2
+console.log(sum(5)); // 6
 console.log(sum(3, 7)); // 10
 ```
 
@@ -64,7 +64,7 @@ console.log(multiply(3, 4)); // 12
 ### 基本概念
 
 Symbol 是 ES6 引入的一種新的基本數據類型，主要用於對象屬性的唯一標識符。每個由 `Symbol()` 創建的 Symbol 值都是唯一的。
-
+雖然在一些框架相對少見，但是需要時可以用來作為避免全局命名衝突的問題。
 ### 創建 Symbol
 
 我們可以使用 `Symbol()` 函數來創建一個新的 Symbol：
@@ -155,7 +155,7 @@ console.log(createUser('Bob', 25)); // { name: 'Bob', age: 25 }
 
 ### Symbol 的應用
 
-Symbol 可用於創建對象的私有屬性，避免屬性名衝突：
+Symbol 可用於創建對象的私有屬性，避免屬性名衝突，另外 Symbol(這裡是放描述) ，剛剛說過同個名稱也是唯一，所以提供後方()，加入描述實際上不會影響到作用或取值：
 
 ```javascript
 const secret = Symbol('secret');
