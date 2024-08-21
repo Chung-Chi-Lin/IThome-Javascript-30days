@@ -1,4 +1,4 @@
-// === day7 自我挑戰 ===
+// === day10 自我挑戰 ===
 
 // 1. 使用 Promises 完成一個非同步計數器
 function asyncCounter(max, interval) {
