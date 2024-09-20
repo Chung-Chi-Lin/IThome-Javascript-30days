@@ -92,6 +92,7 @@ try {
 - 數據驗證：在寫入屬性之前，通過 Proxy 檢查輸入的數據是否符合要求。
 - 數據保護：限制或禁止對象的某些屬性被修改。
 - 動態 API：通過 Proxy 自動生成動態屬性或方法。
+
 ## Reflect 的基本概念與應用
 ### 什麼是 Reflect？
 `Reflect` 是一個內建對象，它提供了類似 `Proxy` 處理程序的方法，用於對 JavaScript 操作進行反射（如 `get`、`set`、`deleteProperty` 等）。這些方法讓我們能夠更自然、更安全地操作對象，同時保持與原生行為的一致性。
@@ -166,13 +167,13 @@ const store = {
 
 // 創建一個代理，攔截對象的操作並記錄日誌
 const logHandler = {
-	get(target, prop) {
+	?(target, prop) {
 		console.log(`讀取屬性: ${prop}`);
-		return Reflect.get(target, prop);
+		return ?;
 	},
-	set(target, prop, value) {
+	?(target, prop, value) {
 		console.log(`設置屬性: ${prop} = ${value}`);
-		return Reflect.set(target, prop, value);
+		return ?);
 	}
 };
 
@@ -194,8 +195,8 @@ const api = {
 
 // 創建一個代理，攔截對象的方法調用並自動生成新的方法
 const apiHandler = {
-	get(target, prop) {
-		if (prop in target) {
+	?(?) {
+		if (?) {
 			return target[prop];
 		} else {
 			// 如果方法不存在，則自動生成一個返回占位符的函數

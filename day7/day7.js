@@ -1,4 +1,4 @@
-// === day7 自我挑戰 ===
+// === day6 自我挑戰 ===
 
 // 1. 使用 `for...of` 迴圈遍歷一個 `Set`
 const mySet = new Set(['apple', 'banana', 'cherry']);
