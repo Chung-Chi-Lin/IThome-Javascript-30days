@@ -9,7 +9,7 @@
 
 ## 介紹
 
-在第二十天，我們將深入探討 JavaScript 中的兩個非常強大的集合類型：`Map` 和 `WeakMap`。它們在處理鍵值對時非常實用。`Map` 提供了靈活的鍵值對存儲，而 `WeakMap` 則專注於處理對象鍵的場景，並優化垃圾回收機制。本文將詳細解釋這兩者的使用方式，並提供實際應用範例來幫助你理解。
+在第二十天，我們將深入探討 JavaScript 中的兩個非常強大的集合類型：`Map` 和 `WeakMap`。它們在處理鍵值對時非常實用。`Map` 提供了靈活的鍵值對存儲，而 `WeakMap` 則專注於處理對象鍵的場景，並優化垃圾回收機制。本文將詳細解釋這兩者的使用方式，並提供實際應用範例來幫助你理解，我認為這是非常必學延伸的重要觀念哦!
 
 ## Map 的基本概念和用法
 
@@ -161,16 +161,19 @@ user = null;
 ```
 
 ## 本篇自我挑戰
+何謂自我挑戰，~~問題不怕困難，重點是要解決出問題的人(誤~~，嘗試開始! 在這裡你可以看到大家是怎麼回答題目的，甚至會看到暗藏的高手可以將簡單的題目回答的淋漓盡致!
+回答我都會放在隔天的 [GitHub](https://github.com/Chung-Chi-Lin) 上哦!
+
 ### 挑戰 1：使用 Map 實現一個用戶數據儲存系統
 ```javascript
-const users = new Map();
+const users = ?;
 
 function addUser(id, name, age) {
-	users.set(id, { name, age });
+	?
 }
 
 function getUser(id) {
-	return users.get(id);
+	?
 }
 
 addUser(1, 'Alice', 25);
@@ -181,10 +184,10 @@ console.log(getUser(1));  // { name: 'Alice', age: 25 }
 
 ### 挑戰 2：使用 WeakMap 追蹤對象的臨時資料
 ```javascript
-const metadata = new WeakMap();
+const metadata = ?;
 
 function addMetadata(obj, data) {
-	metadata.set(obj, data);
+	?
 }
 
 let userObj = { id: 1 };
@@ -198,6 +201,6 @@ userObj = null;
 
 ## 總結
 
-在第二十天的學習中，我們深入探討了 Map 和 WeakMap 的使用方法和應用場景。這兩者都是強大的鍵值對集合，能夠處理複雜的數據存儲需求，並優化內存管理。我們還提供了實際應用範例來幫助你理解這些工具。
+在第二十天的學習中，我們深入探討了 Map 和 WeakMap 的使用方法和應用場景。這兩者都是強大的鍵值對集合，能夠處理複雜的數據存儲需求，並優化內存管理。今天這個在進階實戰非常實用，尤其遇到大量資料渲染或是快速查找。
 
 歡迎在討論區互動交流，明天我們將探索生成器和進階應用！
