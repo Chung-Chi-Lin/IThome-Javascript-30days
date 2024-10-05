@@ -1,4 +1,4 @@
-// === day20 自我挑戰 ===
+// === day21 自我挑戰 ===
 
 // 1. 創建一個生成器來產生一個有限的數字序列
 function* numberSequence(limit) {

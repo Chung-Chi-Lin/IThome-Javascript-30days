@@ -1,4 +1,4 @@
-# 【Day 21】生成器與進階應用
+# 【Day 22】可選鏈式操作符（Optional Chaining）
 
 ## 聯繫我
 
@@ -9,182 +9,165 @@
 
 ## 介紹
 
-在第二十一天，我們將探討 JavaScript 中非常強大且靈活的特性——生成器 (Generators)。生成器允許函數在執行過程中暫停和恢復，這使其成為處理異步操作和複雜流程控制的理想選擇。
+歡迎來到第 22 天！越接近文章結束日越精彩越實用！來來來~今天我們要聊的是 ES2020 引入的一個極其方便的語法——可選鏈式操作符（Optional Chaining）。這個操作符可以幫助我們優雅地解決 JavaScript 中常見的「無法讀取未定義的屬性」錯誤（`Cannot read property of undefined`）。這個工具能讓我們的代碼看起來更乾淨、更健壯。
 
-## 生成器的基礎
+你有沒有遇過這種情況？你想要訪問一個深層嵌套的物件屬性，結果中途某個屬性是 `undefined`，導致整個訪問失敗，或是 `Dom` 上進行判斷時會發現因為取不到值而出錯，
+甚至直接讓你的代碼崩潰。可選鏈式操作符就是為了這種情況而生的！
+
+## 基本概念
+可選鏈式操作符用一個簡單的 `?.` 來幫助你在物件鏈中輕鬆地檢查某個屬性是否存在。如果鏈中的某個屬性不存在，表達式會返回 `undefined`，而不會拋出錯誤。這在我們處理可能為空或未定義的數據時非常實用。
 
 ### 基本語法
-
-生成器函數是使用 `function*` 定義的，並且在函數內部使用 `yield` 關鍵字來暫停函數的執行。
-
-```javascript
-// 定義一個生成器函數，生成器函數會在每次遇到 yield 時暫停
-function* simpleGenerator() {
-    yield 1;
-    yield 2;
-    yield 3;
-}
-
-// 創建生成器對象
-const gen = simpleGenerator();
-
-// 每次調用 next() 方法，生成器會返回一個 { value, done } 對象
-console.log(gen.next()); // { value: 1, done: false }
-console.log(gen.next()); // { value: 2, done: false }
-console.log(gen.next()); // { value: 3, done: false }
-console.log(gen.next()); // { value: undefined, done: true }
-```
-在這個例子中，生成器函數 `simpleGenerator` 在每次遇到 `yield` 關鍵字時都會暫停執行，並且返回 `yield` 的值。當生成器函數執行完畢後，它會返回 `{ value: undefined, done: true }`。
-
-### 使用 for...of 迴圈遍歷生成器
-生成器對象也可以使用 `for...of` 迴圈進行遍歷。
+讓我們看看它是如何工作的：
 
 ```javascript
-function* simpleGenerator() {
-    yield 1;
-    yield 2;
-    yield 3;
-}
+const user = {
+  name: 'Alice',
+  address: {
+    city: 'Wonderland',
+  }
+};
 
-for (const value of simpleGenerator()) {
-    console.log(value); // 依次輸出 1, 2, 3
-}
+// 傳統方式，需多次檢查屬性是否存在
+const city = user && user.address && user.address.city;
+console.log(city); // 'Wonderland'
+
+// 使用可選鏈式操作符
+const cityNew = user?.address?.city;
+console.log(cityNew); // 'Wonderland'
+
+// 如果 user.address 不存在，不會拋出錯誤，而是返回 undefined
+const postalCode = user?.address?.postalCode;
+console.log(postalCode); // undefined
 ```
+你會發現，使用可選鏈式操作符的代碼要簡潔多了，無需層層檢查每個屬性是否存在。
 
-## 進階應用
-### 生成器處理異步流程
-生成器可以通過與 `Promise` 搭配使用來處理異步操作。這樣可以讓代碼更加直觀，類似於 `a`sync/await` 的效果。
+## 應用場景
+### 1. 安全地訪問嵌套的屬性
+在處理來自 API 的數據或動態數據時，我們經常會遇到一些結構不穩定的物件。這時，可選鏈式操作符就能大顯身手。
 
 ```javascript
-function* asyncTask() {
-    const data1 = yield fetch('https://api.example.com/data1');
-    console.log('Data 1:', data1);
+const userProfile = {
+  name: 'John',
+  contactInfo: {
+    email: 'john@example.com',
+  }
+};
 
-    const data2 = yield fetch('https://api.example.com/data2');
-    console.log('Data 2:', data2);
-}
-
-// 實現一個簡單的執行器，協調 Promise 和生成器
-function execute(generator) {
-    const gen = generator();
-
-    function handleResult(result) {
-        if (result.done) return;
-        result.value.then(res => res.json()).then(data => handleResult(gen.next(data)));
-    }
-
-    handleResult(gen.next());
-}
-
-execute(asyncTask);
+// 當某些資料不確定存在時，使用可選鏈式操作符來防止錯誤
+const phoneNumber = userProfile?.contactInfo?.phone;
+console.log(phoneNumber); // undefined，而不是報錯
 ```
-這個例子展示了如何使用生成器來控制異步流程。雖然 `async/await` 是處理異步代碼的標準，但這種生成器的應用展示了生成器的靈活性和強大功能。
 
-### 生成器與迭代器結合
-生成器本質上是一個迭代器，因此可以用來生成序列數據。這在需要生成大量數據時非常實用。
+### 2. 與函數一起使用
+可選鏈式操作符還可以用來檢查函數是否存在。這樣，你可以在保證函數存在的情況下安全地調用它。
 
 ```javascript
-function* fibonacci(limit) {
-    let [prev, curr] = [0, 1];
-    while (limit--) {
-        yield curr;
-        [prev, curr] = [curr, prev + curr];
-    }
-}
+const userActions = {
+  greet() {
+    console.log('Hello!');
+  }
+};
 
-// 使用生成器生成前 10 個 Fibonacci 數字
-for (const num of fibonacci(10)) {
-    console.log(num); // 依次輸出 1, 1, 2, 3, 5, 8, 13, 21, 34, 55
-}
+// 如果 greet 方法存在，則執行
+userActions.greet?.(); // 輸出: 'Hello!'
 
+// 如果不存在，什麼也不會發生
+userActions.farewell?.(); // 不會拋出錯誤
 ```
-在這裡，我們使用生成器實現了一個 Fibonacci 數列，通過 `for...of` 迴圈來依次取出數列中的值。
+
+### 3. 安全訪問數組元素
+當我們需要安全地訪問數組元素時，可選鏈式操作符也能派上用場。
+
+```javascript
+const fruits = ['apple', 'banana', 'cherry'];
+
+// 安全地訪問數組元素，避免越界
+console.log(fruits?.[1]); // 'banana'
+console.log(fruits?.[5]); // undefined，而不是報錯
+```
+
+## 可選鏈式操作符的限制
+儘管可選鏈式操作符非常方便，但也有它的限制：
+
+1. 不可用於左側操作數：你不能在可選鏈中修改或賦值，`?.` 只能用來安全地讀取值，而不能用來寫入值。
+2. 只能檢查 `null` 或 `undefined`：可選鏈式操作符只會檢查 `null` 或 `undefined`，如果物件存在但是 `false`、`0` 或空字串，它仍會返回該值，而不是 `undefined`。
+```javascript
+const value = 0;
+console.log(value?.toFixed(2)); // 0.00
+```
+這裡 `value` 是 `0`，雖然是假值，但因為它並非 `undefined` 或 `null`，所以可選鏈式操作符並不會影響它。
 
 ## 實際應用範例
-### 控制異步流程
-生成器可以用來模擬 `async/await` 的行為，特別是在需要逐步執行異步操作時非常有用。
+### 安全處理 API 回傳數據
+在前端開發中，我們經常會遇到不確定的數據結構，特別是來自外部 API 的數據。有了可選鏈式操作符，處理這些數據變得更加輕鬆。
 
 ```javascript
-function* loadData() {
-    const userData = yield fetch('https://api.example.com/user');
-    console.log('User Data:', userData);
-
-    const posts = yield fetch(`https://api.example.com/user/${userData.id}/posts`);
-    console.log('User Posts:', posts);
+async function fetchUserData(userId) {
+  const response = await fetch(`https://api.example.com/users/${userId}`);
+  const data = await response.json();
+  
+  // 使用可選鏈式操作符安全地訪問深層次屬性
+  const city = data?.address?.city;
+  console.log(city || '城市信息不可用');
 }
 
-// 這個執行器將協調 Promise 和生成器
-function run(generator) {
-    const gen = generator();
-
-    function nextStep(result) {
-        if (result.done) return;
-        result.value.then(res => res.json()).then(data => nextStep(gen.next(data)));
-    }
-
-    nextStep(gen.next());
-}
-
-run(loadData);
+fetchUserData(123);
 ```
 
-### 生成器與無限序列
-生成器非常適合生成無限序列，這是常規函數無法做到的。
+### 在大型應用中的防錯設計
+在大型應用中，很多時候我們需要處理來自多個來源的數據，可選鏈式操作符能夠幫助我們防止出現未定義錯誤並保證應用不會崩潰。
 ```javascript
-function* infiniteSequence() {
-    let i = 0;
-    while (true) {
-        yield i++;
+const appConfig = {
+  theme: {
+    darkMode: true,
+    colors: {
+      primary: '#000000',
     }
-}
+  }
+};
 
-const seq = infiniteSequence();
-console.log(seq.next().value); // 0
-console.log(seq.next().value); // 1
-console.log(seq.next().value); // 2
+// 使用可選鏈式操作符安全訪問設置屬性
+const primaryColor = appConfig?.theme?.colors?.primary;
+console.log(primaryColor || '預設顏色');
 ```
 
 ## 本篇自我挑戰
-何謂自我挑戰，問題不怕困難，重點是要解決出問題的人(誤，嘗試開始! 在這裡你可以看到大家是怎麼回答題目的，甚至會看到暗藏的高手可以將簡單的題目回答的淋漓盡致! 回答我都會放在隔天的 GitHub 上哦!
+何謂自我挑戰，~~問題不怕困難，重點是要解決出問題的人(誤~~，嘗試開始! 在這裡你可以看到大家是怎麼回答題目的，甚至會看到暗藏的高手可以將簡單的題目回答的淋漓盡致!
+回答我都會放在隔天的 [GitHub](https://github.com/Chung-Chi-Lin) 上哦!
 
-### 挑戰 1：創建一個生成器來產生一個有限的數字序列
+### 挑戰 1：安全訪問一個嵌套的物件
 ```javascript
-function* numberSequence(limit) {
-    for (let i = 1; i <= limit; i++) {
-        yield i;
+const book = {
+  title: 'JavaScript Mastery',
+  author: {
+    name: 'John Doe',
+    contact: {
+      email: 'john@example.com'
     }
-}
+  }
+};
 
-const sequence = numberSequence(5);
-for (const num of sequence) {
-    console.log(num); // 依次輸出 1, 2, 3, 4, 5
-}
+// 使用可選鏈式操作符來安全訪問 contact 裡的 email 屬性
+const authorEmail = book-> ???;
+console.log(authorEmail || '電子郵件不可用'); // 'john@example.com'
 ```
 
-### 挑戰 2：使用生成器處理異步操作，模擬多個 API 請求
+### 挑戰 2：安全調用一個可選的函數
 ```javascript
-function* fetchMultipleData() {
-    const user = yield fetch('https://api.example.com/user');
-    const posts = yield fetch(`https://api.example.com/user/${user.id}/posts`);
-    return { user, posts };
-}
+const myObject = {
+  greet() {
+    console.log('Hello, World!');
+  }
+};
 
-function execute(generator) {
-    const gen = generator();
-
-    function handleResult(result) {
-        if (result.done) return result.value;
-        result.value.then(res => res.json()).then(data => handleResult(gen.next(data)));
-    }
-
-    return handleResult(gen.next());
-}
-
-execute(fetchMultipleData);
+// 使用可選鏈式操作符來安全調用函數
+myObject.greet?.(); // Hello, World!
+myObject.sayGoodbye?.(); // 請問這裡會拋出錯誤嗎?
 ```
 
 ## 總結
 
-在第二十一天的學習中，我們深入探討了生成器及其應用。生成器提供了一種強大的工具來控制代碼的執行流程，特別是在處理異步操作或大量數據生成時。掌握生成器能幫助你更靈活地編寫 JavaScript 代碼。
+在今天的學習中，我們深入了解了可選鏈式操作符（Optional Chaining）的強大功能。這個語法糖能幫助我們減少代碼中的錯誤，特別是在處理複雜的數據結構時，讓你的代碼更健壯、更易讀。下次你不確定某個屬性是否存在時，記得使用 ?. 來保護你的代碼。
 
-歡迎在討論區互動交流，明天我們將繼續探討 可選鏈式操作符！
+歡迎在討論區互動交流，明天我們將繼續探索更多可選鏈式的延伸用法 Nullish 合併運算符！
