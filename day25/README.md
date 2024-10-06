@@ -1,4 +1,4 @@
-# 【Day 24】BigInt 的基礎與應用
+# 【Day 25】全局對象：globalThis
 
 ## 聯繫我
 
@@ -9,118 +9,101 @@
 
 ## 介紹
 
-在今天的挑戰中，我們將介紹 BigInt，這是 JavaScript 在 ES2020 引入的一種新型數據類型。BigInt 的出現解決了 JavaScript 內建 Number 類型無法準確表示超大整數的問題。它允許我們安全地處理比 Number 類型最大值（即 2^53 - 1）還要大的整數。
+今天是第25天，讓我們來聊一個在 JavaScript 中非常有用但容易忽視的概念：`globalThis`。這個新特性從 ES2020 開始被引入，解決了跨環境中全局對象難以訪問的問題。`globalThis` 讓我們在不同的執行環境（如瀏覽器、Node.js、Web Workers）中，無需關心具體環境的全局對象名稱，統一地訪問全局範圍。
 
-簡單來說，如果你要處理超過 JavaScript 內建數字類型所能處理的數字，BigInt 就是你的最佳夥伴！
+## 什麼是 `globalThis`？
+JavaScript 中，`globalThis` 是一個指向全局對象的標準方式。
 
-## BigInt 的基礎知識
+### 之前的問題
+- 在瀏覽器中，全局對象是 `window`。
+- 在 Node.js 中，全局對象是 `global`。
+- 在 Web Workers 中，則是 `self`。
 
-### 如何創建 BigInt？
-創建 BigInt 有兩種主要方式：
-1. 在數字後面加 n 字母來創建一個 BigInt。
-2. 使用 BigInt() 函數將數字轉換為 BigInt。
+這種不一致讓開發者在處理不同環境的代碼時不得不寫出多餘的條件檢查。這是煩惱的一個來源，於是 `globalThis` 應運而生。
+
+### 解決方案：`globalThis`
+`globalThis` 提供了一個統一的方式來訪問全局對象，無論你身處哪個環境。這樣我們不需要再考慮具體的環境差異。
 
 ```javascript
-// 方式 1: 在數字後加 "n"
-const bigInt1 = 1234567890123456789012345678901234567890n;
-console.log(bigInt1); // 1234567890123456789012345678901234567890n
-
-// 方式 2: 使用 BigInt() 函數
-const bigInt2 = BigInt("1234567890123456789012345678901234567890");
-console.log(bigInt2); // 1234567890123456789012345678901234567890n
+console.log(globalThis); 
+// 在瀏覽器中輸出 window，在 Node.js 中輸出 global
 ```
 
-## BigInt 的應用
-### BigInt 的特性
-- 精度：BigInt 可以表示非常大的整數而不會損失精度。
-- 數學運算：BigInt 支持數學運算，但不能與 Number 混合運算。
+## `globalThis` 的應用場景
+### 全局變量的訪問
+在開發過程中，可能會遇到一些跨平台代碼需要同時在多個環境中運行。這時候，如果想要全局訪問一個變量，使用 `globalThis` 是最便捷的方式。
 
 ```javascript
-const bigInt1 = 100000000000000000000n;
-const bigInt2 = 200000000000000000000n;
-
-const result = bigInt1 + bigInt2;
-console.log(result); // 300000000000000000000n
+globalThis.myGlobalValue = 'Hello, World!';
+console.log(myGlobalValue); // 'Hello, World!'
 ```
+這樣的寫法保證了無論代碼是在瀏覽器、Node.js 還是 Web Workers 中，都可以一致地訪問到全局變量。
 
-### BigInt 與 Number 不能混合運算
-雖然 BigInt 和 Number 都是數值類型，但它們不能直接進行混合運算。如果這麼做，JavaScript 會拋出一個錯誤：
+### 使用 `globalThis` 替換傳統的全局對象
+有時我們想寫出兼容多環境的代碼，而不想針對不同環境逐一設置全局變量。我們可以直接使用 globalThis，這樣不必擔心環境差異。
 
 ```javascript
-const bigIntValue = 100n;
-const numberValue = 20;
-
-try {
-    console.log(bigIntValue + numberValue); // 這會拋出錯誤
-} catch (e) {
-    console.error(e.message); // Cannot mix BigInt and other types
+function sayHello() {
+    globalThis.console.log('Hello from anywhere!');
 }
-```
 
-要解決這個問題，你需要顯式地轉換數據類型。例如，將 Number 轉換為 BigInt：
-```javascript
-const result = bigIntValue + BigInt(numberValue);
-console.log(result); // 120n
+sayHello(); // 在任何環境下都可以使用
 ```
+這段代碼在瀏覽器、Node.js 或其他環境下都能執行，並且訪問到正確的全局 `console` 方法。
 
-## BigInt 的運算
-### BigInt 支持的運算符
-BigInt 支持 JavaScript 中常見的數學運算符，包括：
-- 加法 +
-- 減法 -
-- 乘法 *
-- 除法 /（會返回整數）
-- 餘數 %
+## `globalThis` 的實際應用
+### 簡化跨平台代碼
+在編寫可在多個 JavaScript 執行環境中運行的代碼時，使用 globalThis 來避免環境差異的處理。
 
 ```javascript
-const bigInt1 = 50n;
-const bigInt2 = 3n;
+(function() {
+    globalThis.myUtility = function() {
+        console.log('This utility is available globally!');
+    };
+})();
 
-console.log(bigInt1 + bigInt2); // 53n
-console.log(bigInt1 - bigInt2); // 47n
-console.log(bigInt1 * bigInt2); // 150n
-console.log(bigInt1 / bigInt2); // 16n （注意：BigInt 的除法會向下取整）
-console.log(bigInt1 % bigInt2); // 2n
+myUtility(); // 任何環境下都可以調用這個方法
 ```
+這段代碼直接使用了 `globalThis`，避免了在不同環境中手動判斷並設置全局對象的麻煩。
 
-## BigInt 的應用場景
-### 1. 大數據運算
-當需要處理超大數字（例如科學計算、加密算法等），BigInt 是你的好幫手。以前，如果我們需要精確計算 64 位整數或更大的數字，我們必須依賴第三方庫。現在有了 BigInt，這些運算可以直接在原生 JavaScript 中進行。
+## 減少依賴環境特定代碼
+比如在 Node.js 和瀏覽器環境中，我們可能需要分別使用 `window` 或 `global` 訪問全局對象。`globalThis` 解決了這個問題。
 
-### 2. 精確度要求極高的金融計算
-在處理金融系統時，我們經常需要處理精度非常高的數字。BigInt 可以幫助解決這一問題，避免由於精度丟失而出現的錯誤計算。
+```javascript
+function getGlobal() {
+    return globalThis;
+}
+
+console.log(getGlobal()); // 根據不同環境返回相應的全局對象
+```
+這樣，我們可以確保不管在哪裡運行代碼，都能取得全局對象。
 
 ## 本篇自我挑戰
 何謂自我挑戰，~~問題不怕困難，重點是要解決出問題的人(誤~~，嘗試開始! 在這裡你可以看到大家是怎麼回答題目的，甚至會看到暗藏的高手可以將簡單的題目回答的淋漓盡致!
 回答我都會放在隔天的 [GitHub](https://github.com/Chung-Chi-Lin) 上哦!
 
-### 挑戰 1：創建一個 BigInt 並進行基本運算
+### 挑戰 1：使用 `globalThis` 在瀏覽器和 Node.js 中共享變量
 ```javascript
-const bigInt1 = 100000000000000000000n;
-const bigInt2 = 200000000000000000000n;
+// 創建一個全局變量
+? = 'This is shared!';
 
-console.log(bigInt1 + bigInt2); // 預期輸出：300000000000000000000n
-console.log(bigInt1 * bigInt2); // 預期輸出：20000000000000000000000000000000000000000n
+// 訪問這個變量
+console.log(globalThis.sharedVar); // 輸出: 'This is shared!' 在任何環境中運行
 ```
 
-### 挑戰 2：嘗試混合使用 BigInt 和 Number 並解決錯誤
+### 挑戰 2：使用 `globalThis` 設計一個跨環境的實用工具
 ```javascript
-const bigIntValue = 100n;
-const numberValue = 50;
+(function() {
+    ? = function(message) {
+        ?(`Log: ${message}`);
+    };
+})();
 
-try {
-    console.log(bigIntValue + numberValue); // 這會拋出錯誤
-} catch (e) {
-    console.error("錯誤:", e.message);
-}
-
-// 解決方案：顯式轉換 Number 為 BigInt
-const correctResult = bigIntValue + BigInt(numberValue);
-console.log(correctResult); // 預期輸出：150n
+myLogger('Cross-platform logging'); // 輸出: 'Log: Cross-platform logging'
 ```
 
 ## 總結
 
-今天我們介紹了 BigInt，它在處理大數據、科學計算和金融運算中發揮著關鍵作用。我們也了解了 BigInt 與 Number 的區別以及它們的運算規則。BigInt 雖然是個新手，但它將會在未來的 JavaScript 應用中越來越常見。
+`globalThis` 是 JavaScript 中一個相當實用的特性，尤其在需要跨平台、跨環境開發時。它讓我們的代碼變得更加一致和簡潔，避免了許多繁瑣的環境判斷。希望你在今天的學習中能掌握這個有趣的全局對象！
 
-明天我們將繼續探討 JavaScript 中其他有趣且實用的特性！
+歡迎在討論區與我互動，我們將在下一篇探討高階函數的應用。
