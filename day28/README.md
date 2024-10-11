@@ -1,4 +1,4 @@
-# 【Day 26】簡化的異步處理
+# 【Day 28】進階正則表達式技巧
 
 ## 聯繫我
 
@@ -9,133 +9,131 @@
 
 ## 介紹
 
-今天我們來到第 27 天，話題是「簡化異步處理」！說到 JavaScript 的異步處理，你可能會聯想到回調地獄（Callback Hell）、Promise chain（Promise 鏈），以及最近幾年廣受歡迎的 async/await 語法。這些工具讓我們處理異步代碼時更加輕鬆，不再需要深陷於嵌套的回調地獄中。今天我們將重點講解如何使用 async/await 和一些簡單的技巧，讓你在處理異步操作時更加高效。
+歡迎來到第 28 天！今天我們要來聊聊正則表達式（Regular Expression，簡稱 regex）。這是一個強大的工具，雖然初學時可能有點像外星語，但學會它後會讓你處理字串變得輕而易舉！今天，我們會探討一些進階技巧，讓你輕鬆處理各種複雜的文本匹配問題。
 
-## 為什麼需要異步處理？
-JavaScript 是單線程的，這意味著它同一時間只能做一件事。假設你在處理一個大型文件或等待網路請求的響應，如果不使用異步處理，這些操作可能會讓你的應用程式“卡住”，無法回應其他操作。
+想像一下：你在大量文本中尋找一個特定的模式，或想驗證一個電子郵件地址、電話號碼、郵政編碼。這些需求都可以用正則表達式解決。放心，今天的內容不會讓你抓狂，跟著我一起走進這個神奇的工具吧！
 
-### 異步的現實生活比喻
-想像一下你在點餐排隊，但你還要等廚房完成食物。你可以選擇一直站在櫃台前等（同步操作），但這樣會讓櫃台後面的人無法點餐。相反，你可以選擇回到座位上，等待號碼叫到你再去取餐（異步操作）。這樣，你不僅節省了時間，櫃台也可以繼續處理其他客人的訂單。
+## 基礎複習
+在進入進階內容之前，讓我們簡單回顧一下正則表達式的基本用法。正則表達式是一種匹配字串模式的工具，它可以幫助我們找到特定的字符組合、替換文本或者進行字串拆分。
 
-## async/await 的簡化異步處理
-### async 函數
-async 關鍵字用來定義一個異步函數，這個函數會返回一個 Promise。所有返回非 Promise 的值會被自動封裝成 Promise。
+### 基本正則表達式
+```javascript
+const regex = /hello/;
+const str = "hello world";
+console.log(regex.test(str)); // true
+```
+在這個例子中，我們定義了一個 `regex` 模式來匹配字串 "hello"。`test()` 方法返回一個布林值，表示字串是否符合模式。
+
+## 進階正則表達式技巧
+今天的目標是進一步探討一些高級技巧，這些技巧將幫助你解決更複雜的文本處理需求。
+
+### 1. 捕獲組（Capture Groups）
+捕獲組是正則表達式中的重要特性，讓你可以提取出匹配的特定部分。
 
 ```javascript
-async function fetchData() {
-  return "Fetched data";
-}
-
-fetchData().then(data => {
-  console.log(data); // 輸出: Fetched data
-});
+const regex = /(\d{3})-(\d{3})-(\d{4})/;
+const str = "Phone: 123-456-7890";
+const match = regex.exec(str);
+console.log(match[0]); // 123-456-7890
+console.log(match[1]); // 123
+console.log(match[2]); // 456
+console.log(match[3]); // 7890
 ```
-在這裡，fetchData 函數被標記為 async，它返回一個 Promise，這樣我們就可以使用 .then() 來處理它的結果。
+這裡的 `(\d{3})` 用於捕捉三個連續的數字，通過捕獲組，我們可以輕鬆提取出每段匹配到的內容。`exec()` 方法返回一個陣列，第一個元素是整個匹配的結果，後面的元素是每個捕獲組的內容。
 
-### await 等待 Promise 的結果
-await 關鍵字只能在 async 函數中使用，它可以暫停函數的執行，直到 Promise 完成。await 會等待 Promise 的結果，而不是立即返回。
+### 2. 非捕獲組（Non-Capturing Groups）
 
-```javascript
-async function processData() {
-  const data = await fetchData(); // 等待 fetchData 的結果
-  console.log(data); // 輸出: Fetched data
-}
-
-processData();
-```
-await 就像告訴 JavaScript：「別著急，等這個 Promise 完成了再繼續執行。」
-
-## 異步錯誤處理
-在 async/await 語法中，我們可以使用 try...catch 來捕捉異步操作中的錯誤。
+如果你只想要匹配而不需要捕捉內容，那麼可以使用 `(?:)` 創建非捕獲組。
 
 ### 示例：處理異步操作中的錯誤
 ```javascript
-async function fetchDataWithErrorHandling() {
-  try {
-    const data = await fetch("https://invalid-url.com"); // 這裡可能會拋出錯誤
-    console.log(data);
-  } catch (error) {
-    console.error("Error fetching data:", error); // 捕捉到錯誤
-  }
-}
-
-fetchDataWithErrorHandling();
+const regex = /(?:\d{3})-(\d{3})-(\d{4})/;
+const str = "Phone: 123-456-7890";
+const match = regex.exec(str);
+console.log(match[1]); // 456
 ```
-當異步操作失敗時，我們可以用 catch 來捕獲並處理錯誤。這樣就不會中斷整個應用程式的運行。
+這個正則表達式和前一個類似，但 `(?:\d{3})` 是一個非捕獲組，所以結果中不會包含第一段數字。
 
-## 並行處理多個異步操作
-有時候我們可能需要同時執行多個異步操作。此時我們可以使用 Promise.all()，讓所有操作同時進行，最後等待所有操作完成。
+### 3. 斷言（Assertions）
 
-### 示例：使用 Promise.all() 執行並行異步操作
+斷言是一種很強大的正則技巧，它允許你定義一個條件來控制匹配的位置，而不會實際匹配該內容。
 
+**正向斷言（Lookahead）**
+正向斷言允許你匹配某個條件出現在某個位置之前。
 ```javascript
-async function fetchMultipleDataSources() {
-  const [data1, data2] = await Promise.all([
-    fetch("https://api.example.com/data1"),
-    fetch("https://api.example.com/data2")
-  ]);
-
-  console.log("Data 1:", data1);
-  console.log("Data 2:", data2);
-}
-
-fetchMultipleDataSources();
+const regex = /\d+(?= dollars)/;
+const str = "I have 100 dollars";
+const match = regex.exec(str);
+console.log(match[0]); // 100
 ```
-Promise.all() 可以同時發出多個請求，並且等所有請求都完成後才繼續執行。這樣可以大大提升應用性能。
+這裡的 `(?= dollars)` 表示只匹配後面跟著 "dollars" 的數字，但實際上不會匹配 "dollars"。
+
+**負向斷言（Negative Lookahead）**
+負向斷言則匹配某個條件不出現在某個位置之前。
+```javascript
+const regex = /\d+(?! dollars)/;
+const str = "I have 100 euros";
+const match = regex.exec(str);
+console.log(match[0]); // 100
+```
+這裡的 `(?! dollars)` 表示只匹配後面沒有跟著 "dollars" 的數字。
+
+### 4. 動態正則（Dynamic Regex）
+
+有時你可能需要根據變數來創建正則表達式，這時可以使用 `RegExp` 構造函數。
+
+### 示例：處理異步操作中的錯誤
+```javascript
+const word = "hello";
+const regex = new RegExp(word, "i"); // 創建一個不區分大小寫的正則
+const str = "Hello world";
+console.log(regex.test(str)); // true
+```
+這樣我們可以根據變數來動態生成正則表達式，這在處理動態數據時非常有用。
 
 ## 實際應用場景
-### 加載數據並顯示加載動畫
-在現實的應用中，我們可能會希望在數據加載時顯示一個加載動畫，這可以通過 async/await 簡單實現：
+### 1. 驗證電子郵件地址
+電子郵件地址的格式非常複雜，但我們可以用正則表達式來驗證一個基本的電子郵件格式。
 ```javascript
-async function loadData() {
-  showLoading(); // 顯示加載動畫
-
-  try {
-    const data = await fetchData(); // 加載數據
-    displayData(data); // 顯示數據
-  } catch (error) {
-    displayError(error); // 處理錯誤
-  } finally {
-    hideLoading(); // 隱藏加載動畫
-  }
-}
-
-loadData();
+const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+const email = "test@example.com";
+console.log(emailRegex.test(email)); // true
 ```
-這樣的設計不僅讓代碼簡潔直觀，也提升了用戶體驗。
+這個正則表達式可以檢查一個字串是否是有效的電子郵件地址。
+
+### 2. URL 匹配
+匹配 URL 也是一個常見需求。這裡是一個基本的 URL 匹配模式：
+```javascript
+const urlRegex = /https?:\/\/(www\.)?[a-zA-Z0-9-]+\.[a-z]{2,}/;
+const url = "https://www.example.com";
+console.log(urlRegex.test(url)); // true
+```
+這裡的 https? 允許匹配 http 或 https，後面的部分匹配域名和 TLD。
 
 ## 本篇自我挑戰
 何謂自我挑戰，~~問題不怕困難，重點是要解決出問題的人(誤~~，嘗試開始! 在這裡你可以看到大家是怎麼回答題目的，甚至會看到暗藏的高手可以將簡單的題目回答的淋漓盡致!
 回答我都會放在隔天的 [GitHub](https://github.com/Chung-Chi-Lin) 上哦!
 
-### 挑戰 1： 使用 async/await 處理一個簡單的 API 請求
+### 挑戰 1： 使用捕獲組匹配日期格式
 ```javascript
-async function fetchData() {
-  const response = await fetch("https://api.example.com/data");
-  const data = await response.json();
-  console.log(data);
-}
-
-fetchData();
+const dateRegex = /(\d{4})-(\d{2})-(\d{2})/;
+const date = "2024-09-19";
+const match = dateRegex.exec(date);
+console.log(`年: ${match[1]}, 月: ${match[2]}, 日: ${match[3]}`);
+// 預期輸出: 年: 2024, 月: 09, 日: 19
 ```
 
-### 挑戰 2: 使用 Promise.all() 同時加載多個數據源
+### 挑戰 2: 使用正向斷言匹配特定單字
 ```javascript
-async function fetchDataFromMultipleSources() {
-  const [data1, data2] = await Promise.all([
-    fetch("https://api.example.com/data1").then(res => res.json()),
-    fetch("https://api.example.com/data2").then(res => res.json())
-  ]);
-
-  console.log("數據來源 1:", data1);
-  console.log("數據來源 2:", data2);
-}
-
-fetchDataFromMultipleSources();
+const regex = /\d+(?= kg)/;
+const weight = "重量: 50 kg";
+const match = regex.exec(weight);
+console.log(`匹配到的重量: ${match[0]}`);
+// 預期輸出: 匹配到的重量: 50
 ```
 
 ## 總結
 
-今天我們學習了如何使用 async/await 簡化異步操作，並且了解了如何處理多個並行的異步操作。這些技術讓我們的代碼更加易讀和可維護，對於現代 JavaScript 開發者來說，這些工具是必不可少的。
+今天我們深入探討了正則表達式的進階技巧，包括捕獲組、斷言和動態正則等。這些技巧讓你在處理文本時更加靈活和高效。雖然正則表達式可能看起來像一堆難懂的符號，但掌握它後，處理字串簡直就是一片蛋糕！
 
-明天我們將探索進階的正則表達式技巧！有興趣的同學千萬別錯過！
+明天我們將探討擴展運算符的高級用法，別錯過！

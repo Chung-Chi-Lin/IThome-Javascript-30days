@@ -1,4 +1,4 @@
-// === day28 自我挑戰 ===
+// === day27 自我挑戰 ===
 
 // 1. 使用 async/await 處理一個簡單的 API 請求
 async function fetchData() {
